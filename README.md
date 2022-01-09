@@ -24,4 +24,4 @@ Please feel free to comment or open a pull request if you know better tools / or
 
 ## Biosynthetic Gene cluster detection and classification 
 
-* [DeepBGC](https://github.com/Merck/deepbgc) -[https://academic.oup.com/nar/article/47/18/e110/5545735](https://academic.oup.com/nar/article/47/18/e110/5545735)
+* [DeepBGC](https://github.com/Merck/deepbgc) -[A deep learning genome-mining strategy for biosynthetic gene cluster prediction](https://academic.oup.com/nar/article/47/18/e110/5545735)
