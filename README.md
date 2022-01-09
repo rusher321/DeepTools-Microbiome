@@ -1,8 +1,3 @@
----
-sidebar: auto
-sidebarDepth: 2
----
-
 
 # DeepTools-Microbiome
 _A list of deeplearning tools for metagenome data analysis Whereas most of them are Open Source, not all of them are. Please check licences that may apply.This list contains items that i **personally** find useful, usages may differ._
