@@ -20,3 +20,7 @@ Please feel free to comment or open a pull request if you know better tools / or
 ## Biosynthetic Gene cluster detection and classification 
 
 * [DeepBGC](https://github.com/Merck/deepbgc) -[A deep learning genome-mining strategy for biosynthetic gene cluster prediction](https://academic.oup.com/nar/article/47/18/e110/5545735)
+
+## Predictive Model 
+
+* [MDeep](https://github.com/lichen-lab/MDeep) -[A novel deep learning method for predictive modeling of microbiome data](https://academic.oup.com/bib/article-abstract/22/3/bbaa073/5835556?redirectedFrom=fulltext)
