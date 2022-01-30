@@ -1,0 +1,58 @@
+from bs4 import BeautifulSoup
+import urllib.request
+import pandas as pd 
+from pandas import DataFrame
+
+def extract_url(url):
+    request = urllib.request.Request(url)  # click 
+    content = urllib.request.urlopen(request).read().decode('utf8') # get the html 
+    soup = BeautifulSoup(content, "lxml") # get the bs object
+    urllist = ["https://www.mr-gut.cn/"+x.get('href') for x in soup.select("[class='gut-card']")]
+    return(urllist)
+
+    
+def extract_url_all(year , month):
+    out = []
+    #year = ["2016", "2017", "2018", "2019", "2020", "2021", "2022"]
+    #month = ["01", "02", '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+    date = [[x+"-"+y for y in month ] for x in year]
+    url = [["https://www.mr-gut.cn/daily/index/1/"+x for x in y ] for y in date]
+    for i in url:
+        out = out+i
+    all = out[1:74]
+    url_all = [extract_url(x) for x in all]
+    return(url_all)
+
+def extract_content(url):
+    request = urllib.request.Request(url)  # click 
+    content = urllib.request.urlopen(request).read().decode('utf8') # got the html 
+    soup = BeautifulSoup(content, "lxml")    # return the bs object 
+    hotg_time = soup.select('.rxc-carousel-desc')[1].string # get the time 
+    title = [x.string for x in soup.select(".rxc-daily-list-title")] # get title 
+    journal = [x.em.string for x in soup.select(".rxc-daily-list-info")] # get jounal name 
+    IF = [x.span.string for x in soup.select(".rxc-daily-list-info")] # get the impact factor
+    #key = [x.string for x in soup.select(".pink")] # get the key word 
+    content = [x.string for x in soup.select(".rxc-daily-list-desc")] # get the conent 
+    command = [x.string for x in soup.select(".rxc-daily-list-recommend")] # get the recoomend
+    numtitle = len(title)
+    command = "null" if bool(len(command) != numtitle) else command
+    doi = [x.string for x in soup.select(".rxc-daily-list-doi")]
+    dct_out = {"time": hotg_time, 'title' : title, 'journal' : journal,
+                'IF' : IF, "DOI" : doi, 'key result' :  content, 'comment' : command}
+    return(DataFrame(dct_out))
+
+def combine_content(allurl):
+    all_data = extract_content(allurl[0])
+    for i in range(1,len(allurl)):
+        #print(i)
+        #tmp_data = extract_content(allurl[i])
+        try:
+            tmp_data = extract_content(allurl[i])
+            all_data = pd.concat([all_data, tmp_data])
+        except ValueError:
+            pass
+        continue
+    return(all_data)
+
+allurl2 = extract_url_all()
+all_out = combine_content(allurl2)
